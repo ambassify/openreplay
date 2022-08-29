@@ -90,11 +90,6 @@ spec:
             {{- if eq .Values.global.s3.endpoint "frontend://minio.db.svc.cluster.local:9000" }}
               # Local minio Installation
               value: 'frontends://{{ .Values.global.domainName }}/{{.Values.global.s3.assetsBucket}}'
-            {{- else if contains "amazonaws.com" .Values.global.s3.endpoint }}
-              # AWS S3
-              # Ref: frontends://stackoverflow.com/questions/53634583/go-template-split-string-by-delimiter
-              # We need frontends://bucketname.s3endpoint
-              value: {{ (split "://" .Values.global.s3.endpoint)._0 }}://{{.Values.global.s3.assetsBucket}}.{{ (split "://" .Values.global.s3.endpoint)._1 }}
             {{- else }}
               # S3 compatible storage
               value: '{{ .Values.global.s3.endpoint }}/{{.Values.global.s3.assetsBucket}}'
