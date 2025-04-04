@@ -106,7 +106,7 @@ spec:
           volumeMounts:
           - name: datadir
             mountPath: /mnt/efs
-          {{- include "openreplay.volume.redis_ca_certificate.mount" .Values.global.redis | nindent 12 }}
+          {{- include "openreplay.volume.redis_ca_certificate.mount" .Values.global.redis | nindent 10 }}
           {{- with .Values.persistence.mounts  }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
