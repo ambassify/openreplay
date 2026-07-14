@@ -343,7 +343,7 @@ function cleanup() {
         --env PGDATABASE="$pgdatabase" \
         --env PGPASSWORD="$pgpassword" \
         --env PGPORT="$pgport" \
-        --image bitnami/postgresql -- psql -c "$cleanup_query"
+        --image bitnamilegacy/postgresql -- psql -c "$cleanup_query"
     # Run minio cleanup
     MINIO_ACCESS_KEY=$(yq 'explode(.) | .global.s3.accessKey' ${OR_DIR}/vars.yaml)
     MINIO_SECRET_KEY=$(yq 'explode(.) | .global.s3.secretKey' ${OR_DIR}/vars.yaml)
@@ -352,7 +352,7 @@ function cleanup() {
     kubectl run minio-cleanup -n "${APP_NS}" \
         --restart=Never \
         --env MINIO_HOST="$MINIO_HOST" \
-        --image bitnami/minio:2020.10.9-debian-10-r6 -- /bin/sh -c "
+        --image bitnamilegacy/minio:2020.10.9-debian-10-r6 -- /bin/sh -c "
       mc alias set minio $MINIO_HOST $MINIO_ACCESS_KEY $MINIO_SECRET_KEY &&
       mc rm --recursive --dangerous --force --older-than ${delete_from_number_days}d minio/mobs
       "
